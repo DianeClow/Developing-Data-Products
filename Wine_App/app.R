@@ -23,6 +23,7 @@ ui <- fluidPage(
             textOutput("quality.red"),
             textOutput("quality.white"), 
             p(" "), 
+            p("Please give a couple of minutes for the top two lines to load."), 
             p("The output of the Random Forest Algorithm behind 
               this Shiny App are shown above.  A quick test to show 
               that they work, change the Volatile Acidity to .12.  
