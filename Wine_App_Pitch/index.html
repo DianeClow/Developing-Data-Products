@@ -48,7 +48,9 @@
   <article data-timings="">
     <p>This app takes a scientific approach to examining what makes wine good.  The data is gathered from the UCI Machine Learning Repository listed as &quot;Wine Quality Data Set&quot; (<a href="http://archive.ics.uci.edu/ml/datasets/Wine+Quality">http://archive.ics.uci.edu/ml/datasets/Wine+Quality</a>).  All of the data provided in this data set are values that can be measured in the wine.  </p>
 
-<p>There are two data sets in this analysis, one for Red Wine and another for White Wine.  Using this app you can explore the some of the different chemical volumes that might make a particular style of red or white wine better than the other.  There are lots of cases where the same chemical composition recieves different ratings.</p>
+<p>There are two data sets in this analysis, one for Red Wine and another for White Wine.  Using this app you can explore the some of the different chemical volumes that might make a particular style of red or white wine better than the other.  There are lots of cases where the same chemical composition recieves different ratings depending on if its red or white.</p>
+
+<p>The datas description of the wine: &quot;The two datasets are related to red and white variants of the Portuguese &quot;Vinho Verde&quot; wine. Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables are available (e.g. there is no data about grape types, wine brand, wine selling price, etc.).&quot;</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -77,20 +79,37 @@ colnames(red)
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Slide 4</h2>
+    <h2>Prediction Models</h2>
   </hgroup>
   <article data-timings="">
-    
+    <p>Different models were created for red and white wine though both used the same method.  I ran the following code to generate my models.</p>
+
+<pre><code class="r">mod_RF.red &lt;- train(quality ~., method=&quot;rf&quot;, data = training.red, 
+                    trControl = trainControl(method=&quot;cv&quot;, number = 4))
+
+mod_RF.white &lt;- train(quality ~., method=&quot;rf&quot;, data = training.white, 
+                      trControl = trainControl(method=&quot;cv&quot;, number = 4))
+</code></pre>
+
+<p>Each forest had 500 trees and an OOB estamite of hte error rate of about 31 on each.</p>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="class" id="id" style="background:;">
   <hgroup>
-    <h2>Slide 5</h2>
+    <h2>Limitations</h2>
   </hgroup>
   <article data-timings="">
-    
+    <p>There are some noticable limitations in this model.  </p>
+
+<ul>
+<li><p>There is a lot more to examinng the quality of wine then the 11 variables found in this data set.</p></li>
+<li><p>The majority of the wines in the data set are rated as a 6, and the range of quality is only 3-8</p></li>
+<li><p>This is a very specific set of wine that is going to have lots of similarities</p></li>
+</ul>
+
   </article>
   <!-- Presenter Notes -->
 </slide>
@@ -113,13 +132,13 @@ colnames(red)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Slide 4'>
+        data-slide=3 title='Prediction Models'>
          3
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Slide 5'>
+        data-slide=4 title='Limitations'>
          4
       </a>
     </li>
