@@ -4,23 +4,23 @@ ui <- fluidPage(
     
     sidebarLayout(
         sidebarPanel(
-            numericInput(inputId = "fixed.acidity", label = "Fixed Acidity", value = 0), 
-            numericInput(inputId = "volatile.acidity", label = "volatile Acidity", value = 0), 
-            numericInput(inputId = "citric.acid", label = "Citric Acid", value = 0), 
-            numericInput(inputId = "residual.sugar", label = "Residual Sugar", value = 0), 
-            numericInput(inputId = "chlorides", label = "Chlorides", value = 0), 
-            numericInput(inputId = "free.sulfur.dioxide", label = "Free Sulfur Dioxide", value = 0), 
-            numericInput(inputId = "total.sulfur.dioxide", label = "Total Sulfur Dioxide", value = 0), 
-            numericInput(inputId = "density", label = "Density", value = 0),
-            numericInput(inputId = "pH", label = "pH", value = 0), 
-            numericInput(inputId = "sulphates", label = "Sulphates", value = 0), 
-            numericInput(inputId = "alcohol", label = "Alcohol", value = 0)
+            numericInput(inputId = "fixed.acidity", label = "Fixed Acidity", value = 7.90), 
+            numericInput(inputId = "volatile.acidity", label = "volatile Acidity", value = .52), 
+            numericInput(inputId = "citric.acid", label = "Citric Acid", value = .260), 
+            numericInput(inputId = "residual.sugar", label = "Residual Sugar", value = 2.2), 
+            numericInput(inputId = "chlorides", label = "Chlorides", value = .079), 
+            numericInput(inputId = "free.sulfur.dioxide", label = "Free Sulfur Dioxide", value = 15.87), 
+            numericInput(inputId = "total.sulfur.dioxide", label = "Total Sulfur Dioxide", value = 38), 
+            numericInput(inputId = "density", label = "Density", value = .9968),
+            numericInput(inputId = "pH", label = "pH", value = 3.311), 
+            numericInput(inputId = "sulphates", label = "Sulphates", value = .62), 
+            numericInput(inputId = "alcohol", label = "Alcohol", value = 10.2)
         ),
         mainPanel(
             textOutput("quality.red"),
             textOutput("quality.white"), 
-            p("The output of the Random Forest Algorithm behind this Shiny App are shown above.  A quick test to show that they work, change XXX to YYY.  That will change the ZZZ value.  Then change XXX to YYY.  That will shift the ZZZ value.  Please note that this app sometime takes some time initally load the two sentances that will appear above with the final quality ranking."), 
-            p("This app is designed to help analyze the quality of wine.  The data is from the UCI Machine Learning Repository (http://archive.ics.uci.edu/ml/index.html) and the data set is called “Wine Quality Data Set”.  It contains 11 values: fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free suffer dioxide, total sulfur dioxide, density, pH, sulphates, alcohol, and quality.  Quality is the output variable and is based on a score of 1-10."), 
+            p(" "), 
+            p("The output of the Random Forest Algorithm behind this Shiny App are shown above.  A quick test to show that they work, change the Volatile Acidity to .12.  That will change the white wine value.  Then change the Total Sulfur Dioxide to 289.  That will shift the red wine value.  Please note that this app sometime takes some time initally load the two sentances that will appear above with the final quality ranking."),             p("This app is designed to help analyze the quality of wine.  The data is from the UCI Machine Learning Repository (http://archive.ics.uci.edu/ml/index.html) and the data set is called “Wine Quality Data Set”.  It contains 11 values: fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free suffer dioxide, total sulfur dioxide, density, pH, sulphates, alcohol, and quality.  Quality is the output variable and is based on a score of 1-10."), 
             p('There are two datasets here, one for red wine and one for white wine.  Both datasets contain the same variables, but because of the difference in the wines, I have created two different algorithms.  From the UCI Repository “The two datasets are related to red and white variants of the Portuguese "Vinho Verde" wine.  Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables are available (e.g. there is no data about grape types, wine brand, wine selling price, etc.). “  This means that potentially useful information for rating wines is missing.'), 
             p("It should also be noted that the majority of the wines in the data set have a quality ranking of 6.  You have to find some extremes to get the results to move.  Below I have provided the min, max and median value for each variable shown as: Variable Name (min, median, max)"), 
             p("Fixed Acidity (4.60, 7.90, 15.90)"), 
