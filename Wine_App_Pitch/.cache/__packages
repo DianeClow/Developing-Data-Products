@@ -1,0 +1,13 @@
+base
+lattice
+ggplot2
+caret
+caTools
+bitops
+RCurl
+e1071
+shiny
+randomForest
+rsconnect
+devtools
+slidify
