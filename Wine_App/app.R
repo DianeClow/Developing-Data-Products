@@ -17,13 +17,30 @@ ui <- fluidPage(
             numericInput(inputId = "alcohol", label = "Alcohol", value = 0)
         ),
         mainPanel(
-            textOutput("quality")
+            tableOutput("red.data"), 
+            textOutput("quality.red"),
+            textOutput("quality.white")
         )
     )
 )
 # This line set up the ui app
 
-server <- function(input, output) {}
+server <- function(input, output) {
+    red <- read.csv("winequality-red.csv")
+    white <- read.csv("winequality-white.csv")
+    set.seed(12345)
+    mod_RF.red <- train(quality ~., method="rf", data = training.red, trControl = trainControl(method="cv", number = 4))
+    mod_RF.red$finalModel
+    mod_RF.white <- train(quality ~., method="rf", data = training.white, trControl = trainControl(method="cv", number = 4))
+    mod_RF.white$finalModel
+    
+    output$quality.red <- renderText(
+        paste("This is a test")
+    )
+    output$quality.white <- renderText(
+        paste("This is also a test")
+        )
+}
 # this sets up the server app
 
 shinyApp(ui = ui, server = server)
