@@ -1,4 +1,7 @@
 library(shiny)
+library(caret)
+library(randomForest)
+library(e1071)
 ui <- fluidPage(
     titlePanel("Wine Quality"), 
     
@@ -20,9 +23,44 @@ ui <- fluidPage(
             textOutput("quality.red"),
             textOutput("quality.white"), 
             p(" "), 
-            p("The output of the Random Forest Algorithm behind this Shiny App are shown above.  A quick test to show that they work, change the Volatile Acidity to .12.  That will change the white wine value.  Then change the Total Sulfur Dioxide to 289.  That will shift the red wine value.  Please note that this app sometime takes some time initally load the two sentances that will appear above with the final quality ranking."),             p("This app is designed to help analyze the quality of wine.  The data is from the UCI Machine Learning Repository (http://archive.ics.uci.edu/ml/index.html) and the data set is called “Wine Quality Data Set”.  It contains 11 values: fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free suffer dioxide, total sulfur dioxide, density, pH, sulphates, alcohol, and quality.  Quality is the output variable and is based on a score of 1-10."), 
-            p('There are two datasets here, one for red wine and one for white wine.  Both datasets contain the same variables, but because of the difference in the wines, I have created two different algorithms.  From the UCI Repository “The two datasets are related to red and white variants of the Portuguese "Vinho Verde" wine.  Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables are available (e.g. there is no data about grape types, wine brand, wine selling price, etc.). “  This means that potentially useful information for rating wines is missing.'), 
-            p("It should also be noted that the majority of the wines in the data set have a quality ranking of 6.  You have to find some extremes to get the results to move.  Below I have provided the min, max and median value for each variable shown as: Variable Name (min, median, max)"), 
+            p("The output of the Random Forest Algorithm behind 
+              this Shiny App are shown above.  A quick test to show 
+              that they work, change the Volatile Acidity to .12.  
+              That will change the white wine value.  Then change 
+              the Total Sulfur Dioxide to 289.  That will shift 
+              the red wine value.  Please note that this app 
+              sometime takes some time initally load the two 
+              sentances that will appear above with the final 
+              quality ranking."),             
+            p('This app is designed to help analyze the quality 
+              of wine.  The data is from the UCI Machine Learning 
+              Repository (http://archive.ics.uci.edu/ml/index.html) 
+              and the data set is called “Wine Quality Data Set”.  
+              It contains 11 values: fixed acidity, volatile 
+              acidity, citric acid, residual sugar, chlorides, 
+              free suffer dioxide, total sulfur dioxide, density, 
+              pH, sulphates, alcohol, and quality.  Quality is 
+              the output variable and is based on a score 
+              of 1-10.'), 
+            p('There are two datasets here, one for red wine and 
+              one for white wine.  Both datasets contain the same 
+              variables, but because of the difference in the 
+              wines, I have created two different algorithms.  
+              From the UCI Repository “The two datasets are 
+              related to red and white variants of the 
+              Portuguese "Vinho Verde" wine.  Due to privacy and 
+              logistic issues, only physicochemical (inputs) and 
+              sensory (the output) variables are available (e.g. 
+              there is no data about grape types, wine brand, 
+              wine selling price, etc.). “  This means that 
+              potentially useful information for rating wines 
+              is missing.'), 
+            p("It should also be noted that the majority of the 
+              wines in the data set have a quality ranking of 
+              6.  You have to find some extremes to get the 
+              results to move.  Below I have provided the min, 
+              max and median value for each variable shown as: 
+              Variable Name (min, median, max)"), 
             p("Fixed Acidity (4.60, 7.90, 15.90)"), 
             p("Volatile Acidity (.12, .52, 1.58)"), 
             p("Citric Acid (0, .260, 1.0)"), 
@@ -40,17 +78,17 @@ ui <- fluidPage(
 # This line set up the ui app
 
 server <- function(input, output) {
-    red <- read.csv("winequality-red.csv")
-    white <- read.csv("winequality-white.csv")
+    red <- read.csv("data/winequality-red.csv", sep=";")
+    red$quality <- as.factor(red$quality)
+    white <- read.csv("data/winequality-white.csv", sep=";")
+    white$quality <- as.factor(white$quality)
     set.seed(12345)
     mod_RF.red <- train(quality ~., method="rf", 
-                        data = training.red, 
+                        data = red, 
                         trControl = trainControl(method="cv", number = 4))
-    mod_RF.red$finalModel
     mod_RF.white <- train(quality ~., method="rf", 
-                          data = training.white, 
+                          data = white, 
                           trControl = trainControl(method="cv", number = 4))
-    mod_RF.white$finalModel
     
     output$quality.red <- renderText(
         paste("The quality of a red wine with the following characteristis is a", predict(mod_RF.red, newdata = data.frame("fixed.acidity" = input$fixed.acidity, 
