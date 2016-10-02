@@ -7,32 +7,19 @@ ui <- fluidPage(
     
     sidebarLayout(
         sidebarPanel(
-            numericInput(inputId = "fixed.acidity", label = "Fixed Acidity", value = 7.90), 
-            numericInput(inputId = "volatile.acidity", label = "volatile Acidity", value = .52), 
-            numericInput(inputId = "citric.acid", label = "Citric Acid", value = .260), 
-            numericInput(inputId = "residual.sugar", label = "Residual Sugar", value = 2.2), 
-            numericInput(inputId = "chlorides", label = "Chlorides", value = .079), 
-            numericInput(inputId = "free.sulfur.dioxide", label = "Free Sulfur Dioxide", value = 15.87), 
-            numericInput(inputId = "total.sulfur.dioxide", label = "Total Sulfur Dioxide", value = 38), 
-            numericInput(inputId = "density", label = "Density", value = .9968),
-            numericInput(inputId = "pH", label = "pH", value = 3.311), 
-            numericInput(inputId = "sulphates", label = "Sulphates", value = .62), 
-            numericInput(inputId = "alcohol", label = "Alcohol", value = 10.2)
+            numericInput(inputId = "fixed.acidity", label = "Fixed Acidity   (4.6 - 15.9)", value = 7.90), 
+            numericInput(inputId = "volatile.acidity", label = "volatile Acidity (.12 - 1.58)", value = .52), 
+            numericInput(inputId = "citric.acid", label = "Citric Acid (0 - 1.0)", value = .260), 
+            numericInput(inputId = "residual.sugar", label = "Residual Sugar (.9 - 15.5)", value = 2.2), 
+            numericInput(inputId = "chlorides", label = "Chlorides (.012 - .611)", value = .079), 
+            numericInput(inputId = "free.sulfur.dioxide", label = "Free Sulfur Dioxide (1 - 72)", value = 15.87), 
+            numericInput(inputId = "total.sulfur.dioxide", label = "Total Sulfur Dioxide (6 - 289)", value = 38), 
+            numericInput(inputId = "density", label = "Density (.9901 - 1.0037)", value = .9968),
+            numericInput(inputId = "pH", label = "pH (2.74 - 4.01)", value = 3.311), 
+            numericInput(inputId = "sulphates", label = "Sulphates (.33 - 2)", value = .62), 
+            numericInput(inputId = "alcohol", label = "Alcohol (8.4 - 14.9)", value = 10.2)
         ),
-        mainPanel(
-            textOutput("quality.red"),
-            textOutput("quality.white"), 
-            p(" "), 
-            p("Please give a couple of minutes for the top two lines to load."), 
-            p("The output of the Random Forest Algorithm behind 
-              this Shiny App are shown above.  A quick test to show 
-              that they work, change the Volatile Acidity to .12.  
-              That will change the white wine value.  Then change 
-              the Total Sulfur Dioxide to 289.  That will shift 
-              the red wine value.  Please note that this app 
-              sometime takes some time initally load the two 
-              sentances that will appear above with the final 
-              quality ranking."),             
+        mainPanel(        
             p('This app is designed to help analyze the quality 
               of wine.  The data is from the UCI Machine Learning 
               Repository (http://archive.ics.uci.edu/ml/index.html) 
@@ -56,23 +43,25 @@ ui <- fluidPage(
               wine selling price, etc.). “  This means that 
               potentially useful information for rating wines 
               is missing.'), 
-            p("It should also be noted that the majority of the 
-              wines in the data set have a quality ranking of 
-              6.  You have to find some extremes to get the 
-              results to move.  Below I have provided the min, 
-              max and median value for each variable shown as: 
-              Variable Name (min, median, max)"), 
-            p("Fixed Acidity (4.60, 7.90, 15.90)"), 
-            p("Volatile Acidity (.12, .52, 1.58)"), 
-            p("Citric Acid (0, .260, 1.0)"), 
-            p("Residual Sugar (.9, 2.2, 15.5)"), 
-            p("Chlorides (.012, .079, .611)"),
-            p("Free Sulfur Dioxide (1, 15.87, 72)"), 
-            p("Total Sulfur Dioxide (6, 38, 289)"), 
-            p("Density (.9901, .9968, 1.0037)"), 
-            p("pH (2.74, 3.311, 4.01)"), 
-            p("Sulphates (.33, .62, 2)"), 
-            p("Alcohol (8.4, 10.2, 14.9)")
+            p('It should also be noted that the majority of the wines 
+              in the data set have a quality ranking of 6.  You have to 
+              find some extremes to get the results to move.  Next to 
+              each value on the left is the min and max of each variable.'), 
+            img(src="wine_image.png"), 
+            p(" "), 
+            p("The output of the Random Forest Algorithm behind 
+              this Shiny App are shown below.  A quick test to show 
+              that they work, change the Volatile Acidity to .12.  
+              That will change the white wine value.  Then change 
+              the Total Sulfur Dioxide to 289.  That will shift 
+              the red wine value.  Please note that this app 
+              sometime takes some time initally load the two 
+              sentances that will below above with the final 
+              quality ranking."),     
+            p(" "), 
+            h3("Outputs of the Random Forest", style = "color:red"), 
+            textOutput("quality.red"),
+            textOutput("quality.white")
         )
     )
 )
